@@ -29,12 +29,12 @@
             1.0
         ]
     ],
-    "default_cfg_scale": 4.0,
+    "default_cfg_scale": 5.0,
     "default_sample_sharpness": 0.0,
-    "default_sampler": "euler_a",
+    "default_sampler": "euler_ancestral",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "",
+    "default_prompt": "masterpiece, best quality, artist:hornwood, 1girl,",
     "default_prompt_negative": "worst quality, bad quality, low quality",
     "default_styles": [],
     "default_aspect_ratio": "896*1152",
