@@ -34,7 +34,7 @@
     "default_sampler": "euler_ancestral",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "masterpiece, best quality, artist:Fei \(maidoll\), 1girl,",
+    "default_prompt": "masterpiece, best quality, artist:Fei \\(maidoll\\), 1girl,",
     "default_prompt_negative": "worst quality, bad quality",
     "default_styles": [],
     "default_aspect_ratio": "896*1152",
