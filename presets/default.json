@@ -34,7 +34,7 @@
     "default_sampler": "euler_ancestral",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "masterpiece, best quality, absurdres, highres,  sciamano240, 1girl,",
+    "default_prompt": "masterpiece, best quality, absurdres, highres, sciamano240, 1girl,",
     "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, mammal, anthro, furry, ambiguous form, feral, semi-anthro",
     "default_styles": [],
     "default_aspect_ratio": "896*1152",
