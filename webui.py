@@ -703,9 +703,9 @@ with shared.gradio_root:
                 with gr.Column(visible=modules.config.default_developer_debug_mode_checkbox) as dev_tools:
                     with gr.Tab(label='Debug Tools'):
                         adm_scaler_positive = gr.Slider(label='Positive ADM Guidance Scaler', minimum=0.1, maximum=3.0,
-                                                        step=0.001, value=1.5, info='The scaler multiplied to positive ADM (use 1.0 to disable). ')
+                                                        step=0.001, value=1.0, info='The scaler multiplied to positive ADM (use 1.0 to disable). ')
                         adm_scaler_negative = gr.Slider(label='Negative ADM Guidance Scaler', minimum=0.1, maximum=3.0,
-                                                        step=0.001, value=0.8, info='The scaler multiplied to negative ADM (use 1.0 to disable). ')
+                                                        step=0.001, value=1.0, info='The scaler multiplied to negative ADM (use 1.0 to disable). ')
                         adm_scaler_end = gr.Slider(label='ADM Guidance End At Step', minimum=0.0, maximum=1.0,
                                                    step=0.001, value=0.3,
                                                    info='When to end the guidance from positive/negative ADM. ')
