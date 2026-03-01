@@ -1,5 +1,5 @@
 {
-    "default_model": "NoobAI-XL-v1.1.safetensors",
+    "default_model": "NoobAI-vpred.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.5,
     "default_loras": [
@@ -29,13 +29,13 @@
             1.0
         ]
     ],
-    "default_cfg_scale": 5.0,
+    "default_cfg_scale": 5.5,
     "default_sample_sharpness": 0.0,
-    "default_sampler": "euler_ancestral",
+    "default_sampler": "euler",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "1girl, character, artist, masterpiece, best quality, absurdres, highres",
-    "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, mammal, anthro, furry, ambiguous form, feral, semi-anthro",
+    "default_prompt": "1girl, hatsune miku, rib:y\\(uhki\\),  masterpiece, best quality,",
+    "default_prompt_negative": "lowres,bad anatomy,worst quality,low quality,hands bad,normal quality,bad hands,mutated hands and fingers,extra legs,extra arms,duplicate,cropped,jpeg,artifacts,long body,multiple breasts,mutated,disfigured,bad proportions,bad feet,ugly,missing limb,face bad",
     "default_styles": [],
     "default_aspect_ratio": "896*1152",
     "default_overwrite_step": -1,
