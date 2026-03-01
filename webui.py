@@ -707,7 +707,7 @@ with shared.gradio_root:
                         adm_scaler_negative = gr.Slider(label='Negative ADM Guidance Scaler', minimum=0.1, maximum=3.0,
                                                         step=0.001, value=1.0, info='The scaler multiplied to negative ADM (use 1.0 to disable). ')
                         adm_scaler_end = gr.Slider(label='ADM Guidance End At Step', minimum=0.0, maximum=1.0,
-                                                   step=0.001, value=0.0,
+                                                   step=0.001, value=1.0,
                                                    info='When to end the guidance from positive/negative ADM. ')
 
                         refiner_swap_method = gr.Dropdown(label='Refiner swap method', value=flags.refiner_swap_method,
@@ -740,11 +740,11 @@ with shared.gradio_root:
                                                      value=modules.config.default_overwrite_switch,
                                                      info='Set as -1 to disable. For developer debugging.')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
-                                                    minimum=-1, maximum=2048, step=1, value=1024,
+                                                    minimum=-1, maximum=2048, step=1, value=-1,
                                                     info='Set as -1 to disable. For developer debugging. '
                                                          'Results will be worse for non-standard numbers that SDXL is not trained on.')
                         overwrite_height = gr.Slider(label='Forced Overwrite of Generating Height',
-                                                     minimum=-1, maximum=2048, step=1, value=1536,
+                                                     minimum=-1, maximum=2048, step=1, value=-1,
                                                      info='Set as -1 to disable. For developer debugging. '
                                                           'Results will be worse for non-standard numbers that SDXL is not trained on.')
                         overwrite_vary_strength = gr.Slider(label='Forced Overwrite of Denoising Strength of "Vary"',
