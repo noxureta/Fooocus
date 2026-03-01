@@ -34,10 +34,10 @@
     "default_sampler": "euler",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "1girl, hatsune miku, rib:y\\(uhki\\),  masterpiece, best quality,",
-    "default_prompt_negative": "lowres,bad anatomy,worst quality,low quality,hands bad,normal quality,bad hands,mutated hands and fingers,extra legs,extra arms,duplicate,cropped,jpeg,artifacts,long body,multiple breasts,mutated,disfigured,bad proportions,bad feet,ugly,missing limb,face bad",
+    "default_prompt": "1girl, hatsune miku, rib:y\\(uhki\\), other_tags, masterpiece, best quality",
+    "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, mammal, anthro, furry, blurry, ambiguous form, feral, semi-anthro",
     "default_styles": [],
-    "default_aspect_ratio": "896*1152",
+    "default_aspect_ratio": "832*1216",
     "default_overwrite_step": -1,
     "checkpoint_downloads": {
         
