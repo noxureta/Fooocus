@@ -35,7 +35,7 @@
     "default_scheduler": "normal",
     "default_performance": "Speed",
     "default_prompt": "1girl, hatsune miku, rib:y\\(uhki\\), other_tags, masterpiece, best quality",
-    "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, blurry, ambiguous form, censored",
+    "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, blurry, ambiguous form, disfigured, censored",
     "default_styles": [],
     "default_aspect_ratio": "832*1216",
     "default_overwrite_step": -1,
