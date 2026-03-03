@@ -740,11 +740,11 @@ with shared.gradio_root:
                                                      value=modules.config.default_overwrite_switch,
                                                      info='Set as -1 to disable. For developer debugging.')
                         overwrite_width = gr.Slider(label='Forced Overwrite of Generating Width',
-                                                    minimum=-1, maximum=2048, step=1, value=-1,
+                                                    minimum=-1, maximum=2048, step=128, value=-1,
                                                     info='Set as -1 to disable. For developer debugging. '
                                                          'Results will be worse for non-standard numbers that SDXL is not trained on.')
                         overwrite_height = gr.Slider(label='Forced Overwrite of Generating Height',
-                                                     minimum=-1, maximum=2048, step=1, value=-1,
+                                                     minimum=-1, maximum=2048, step=128, value=-1,
                                                      info='Set as -1 to disable. For developer debugging. '
                                                           'Results will be worse for non-standard numbers that SDXL is not trained on.')
                         overwrite_vary_strength = gr.Slider(label='Forced Overwrite of Denoising Strength of "Vary"',
