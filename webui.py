@@ -699,7 +699,14 @@ with shared.gradio_root:
                                       info='Higher value means image and texture are sharper.')
                 gr.HTML('<a href="https://github.com/lllyasviel/Fooocus/discussions/117" target="_blank">\U0001F4D4 Documentation</a>')
                 dev_mode = gr.Checkbox(label='Developer Debug Mode', value=modules.config.default_developer_debug_mode_checkbox, container=False)
-
+                
+                def snap_to_128(value):
+                            if value is None: 
+                                return -1
+                            if value <= -1: 
+                                return -1
+                            return round(value / 128) * 128
+                    
                 with gr.Column(visible=modules.config.default_developer_debug_mode_checkbox) as dev_tools:
                     with gr.Tab(label='Debug Tools'):
                         adm_scaler_positive = gr.Slider(label='Positive ADM Guidance Scaler', minimum=0.1, maximum=3.0,
@@ -747,6 +754,8 @@ with shared.gradio_root:
                                                      minimum=-1, maximum=2048, step=128, value=-1,
                                                      info='Set as -1 to disable. For developer debugging. '
                                                           'Results will be worse for non-standard numbers that SDXL is not trained on.')
+                        overwrite_width.change(fn=snap_to_128, inputs=overwrite_width, outputs=overwrite_width)
+                        overwrite_height.change(fn=snap_to_128, inputs=overwrite_height, outputs=overwrite_height)
                         overwrite_vary_strength = gr.Slider(label='Forced Overwrite of Denoising Strength of "Vary"',
                                                             minimum=-1, maximum=1.0, step=0.001, value=-1,
                                                             info='Set as negative number to disable. For developer debugging.')
