@@ -460,6 +460,10 @@ def load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, o
         inital_load_device = model_management.unet_inital_load_device(parameters, unet_dtype)
         offload_device = model_management.unet_offload_device()
         model = model_config.get_model(sd, "model.diffusion_model.", device=inital_load_device)
+        if any(x in ckpt_path.lower() for x in ['rf', 'rectified', 'flow']):
+            from ldm_patched.modules.model_sampling import ModelSamplingDiscreteFlow
+            model.model_sampling = ModelSamplingDiscreteFlow()
+            print(f'[RF Patch sd.py] Applied FLOW_MATCHING sampling ✓')
         model.load_model_weights(sd, "model.diffusion_model.")
 
     if output_vae:

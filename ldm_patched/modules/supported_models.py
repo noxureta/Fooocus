@@ -166,11 +166,11 @@ class SDXL(supported_models_base.BASE):
     def model_type(self, state_dict, prefix=""):
         if "v_pred" in state_dict:
             return model_base.ModelType.V_PREDICTION
-        else:
-            return model_base.ModelType.EPS
+        return model_base.ModelType.EPS
 
     def get_model(self, state_dict, prefix="", device=None):
-        out = model_base.SDXL(self, model_type=self.model_type(state_dict, prefix), device=device)
+        detected_type = self.model_type(state_dict, prefix)
+        out = model_base.SDXL(self, model_type=detected_type, device=device)
         if self.inpaint_model():
             out.set_inpaint()
         return out
@@ -304,6 +304,17 @@ class SD_X4Upscaler(SD20):
 
     def get_model(self, state_dict, prefix="", device=None):
         out = model_base.SD_X4Upscaler(self, device=device)
+        return out
+        
+class SDXL_RF(SDXL):
+    """NoobAI Rectified Flow и другие RF модели на базе SDXL"""
+    latent_format = latent_formats.SDXL  # будет заменено на NoobAI_RF после патча latent_formats.py
+
+    def model_type(self, state_dict, prefix=""):
+        return model_base.ModelType.V_PREDICTION
+
+    def get_model(self, state_dict, prefix="", device=None):
+        out = model_base.SDXL(self, model_type=model_base.ModelType.V_PREDICTION, device=device)
         return out
 
 models = [Stable_Zero123, SD15, SD20, SD21UnclipL, SD21UnclipH, SDXLRefiner, SDXL, SSD1B, Segmind_Vega, SD_X4Upscaler]

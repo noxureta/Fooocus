@@ -33,6 +33,36 @@ opFreeU = FreeU_V2()
 opModelSamplingDiscrete = ModelSamplingDiscrete()
 opModelSamplingContinuousEDM = ModelSamplingContinuousEDM()
 
+def apply_rf_sampling_if_needed(model):
+    """Применяет правильный sampling для Rectified Flow моделей"""
+    try:
+        from ldm_patched.modules.model_sampling import ModelSamplingDiscreteFlow
+
+        latent_format = model.model.latent_format
+        latent_format_name = type(latent_format).__name__
+        sampling_type = type(model.model.model_sampling).__name__
+        has_shift = hasattr(latent_format, 'shift_factor')
+
+        # Детект по имени файла — самый надёжный способ
+        model_filename = getattr(model.model, 'filename', '') or ''
+        filename_lower = model_filename.lower()
+        is_rf_by_name = any(x in filename_lower for x in ['rf', 'rectified', 'flow'])
+
+        print(f'[RF Check] latent_format={latent_format_name}, sampling_type={sampling_type}, '
+              f'has_shift={has_shift}, is_rf_by_name={is_rf_by_name}')
+
+        if has_shift or is_rf_by_name:
+            ms = ModelSamplingDiscreteFlow()
+            model = model.clone()
+            model.model.model_sampling = ms
+            print('[RF Patch] Applied ModelSamplingDiscreteFlow ✓')
+        else:
+            print('[RF Patch] Not an RF model, skipping.')
+
+    except Exception as e:
+        print(f'[RF Patch] Error: {e}')
+
+    return model
 
 class StableDiffusionModel:
     def __init__(self, unet=None, vae=None, clip=None, clip_vision=None, filename=None, vae_filename=None):
@@ -144,9 +174,22 @@ def apply_controlnet(positive, negative, control_net, image, strength, start_per
 @torch.no_grad()
 @torch.inference_mode()
 def load_model(ckpt_filename, vae_filename=None):
-    unet, clip, vae, vae_filename, clip_vision = load_checkpoint_guess_config(ckpt_filename, embedding_directory=path_embeddings,
-                                                                vae_filename_param=vae_filename)
-    return StableDiffusionModel(unet=unet, clip=clip, vae=vae, clip_vision=clip_vision, filename=ckpt_filename, vae_filename=vae_filename)
+    unet, clip, vae, vae_filename, clip_vision = load_checkpoint_guess_config(
+        ckpt_filename, embedding_directory=path_embeddings,
+        vae_filename_param=vae_filename)
+
+    # Применяем RF патч сразу при загрузке
+    if unet is not None:
+        unet.model.filename = ckpt_filename
+        filename_lower = ckpt_filename.lower()
+        is_rf = any(x in filename_lower for x in ['rf', 'rectified', 'flow'])
+        if is_rf:
+            from ldm_patched.modules.model_sampling import ModelSamplingDiscreteFlow
+            unet.model.model_sampling = ModelSamplingDiscreteFlow()
+            print(f'[RF Patch] Applied at load time for: {ckpt_filename} ✓')
+
+    return StableDiffusionModel(unet=unet, clip=clip, vae=vae, clip_vision=clip_vision,
+                                filename=ckpt_filename, vae_filename=vae_filename)
 
 
 @torch.no_grad()
@@ -300,7 +343,7 @@ def ksampler(model, positive, negative, latent, seed=None, steps=30, cfg=7.0, sa
             y = previewer(x0, previewer_start + step, previewer_end)
         if callback_function is not None:
             callback_function(previewer_start + step, x0, x, previewer_end, y)
-
+    
     disable_pbar = False
     modules.sample_hijack.current_refiner = refiner
     modules.sample_hijack.refiner_switch_step = refiner_switch

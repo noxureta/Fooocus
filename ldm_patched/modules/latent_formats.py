@@ -102,3 +102,38 @@ class SC_B(LatentFormat):
             [-0.3087, -0.1535,  0.0366],
             [ 0.0290, -0.1574, -0.4078]
         ]
+
+class SD_X4(LatentFormat):
+    scale_factor = 0.08333
+    latent_rgb_factors = [
+        [-0.2340, -0.3863, -0.3257],
+        [ 0.0994,  0.0885, -0.0908],
+        [-0.2833, -0.2349, -0.3741],
+        [ 0.2523, -0.0055, -0.1651],
+    ]
+
+
+class SDXL_Turbo(LatentFormat):
+    def __init__(self):
+        self.scale_factor = 0.13025
+        self.latent_rgb_factors = SDXL.latent_rgb_factors
+
+
+class NoobAI_RF(LatentFormat):
+    """Latent format для NoobAI Rectified Flow моделей"""
+    def __init__(self):
+        # Эти значения взяты из метаданных модели NoobAI RF
+        self.scale_factor = 1.0 / 0.1280
+        self.shift_factor = 0.1726
+        self.latent_rgb_factors = [
+            [ 0.3512,  0.2297,  0.3227],
+            [ 0.3250,  0.4974,  0.2350],
+            [-0.2829,  0.1762,  0.2721],
+            [-0.2120, -0.2616, -0.7177],
+        ]
+
+    def process_in(self, latent):
+        return (latent - self.shift_factor) * self.scale_factor
+
+    def process_out(self, latent):
+        return latent / self.scale_factor + self.shift_factor

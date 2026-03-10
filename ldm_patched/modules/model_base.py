@@ -12,7 +12,7 @@ class ModelType(Enum):
     EPS = 1
     V_PREDICTION = 2
     V_PREDICTION_EDM = 3
-
+    FLOW_MATCHING = 4
 
 from ldm_patched.modules.model_sampling import EPS, V_PREDICTION, ModelSamplingDiscrete, ModelSamplingContinuousEDM
 
@@ -27,6 +27,9 @@ def model_sampling(model_config, model_type):
     elif model_type == ModelType.V_PREDICTION_EDM:
         c = V_PREDICTION
         s = ModelSamplingContinuousEDM
+    elif model_type == ModelType.FLOW_MATCHING:  # ← добавить этот блок
+        from ldm_patched.modules.model_sampling import ModelSamplingDiscreteFlow
+        return ModelSamplingDiscreteFlow()
 
     class ModelSampling(s, c):
         pass
@@ -62,6 +65,11 @@ class BaseModel(torch.nn.Module):
     def apply_model(self, x, t, c_concat=None, c_crossattn=None, control=None, transformer_options={}, **kwargs):
         sigma = t
         xc = self.model_sampling.calculate_input(sigma, x)
+        if not hasattr(self, '_debug_count'):
+            self._debug_count = 0
+        if self._debug_count < 5:
+            print(f"[DEBUG] ms={type(self.model_sampling).__name__}, sigma={float(sigma.min()):.4f}-{float(sigma.max()):.4f}, x_range=[{float(x.min()):.2f},{float(x.max()):.2f}], xc_range=[{float(xc.min()):.2f},{float(xc.max()):.2f}]")
+            self._debug_count += 1
         if c_concat is not None:
             xc = torch.cat([xc] + [c_concat], dim=1)
 

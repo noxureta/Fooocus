@@ -207,3 +207,65 @@ class StableCascadeSampling(ModelSamplingDiscrete):
 
         percent = 1.0 - percent
         return self.sigma(torch.tensor(percent))
+
+class CONST:
+    """Prediction type для Rectified Flow (NoobAI RF, SD3, Flux)"""
+    def calculate_input(self, sigma, noise):
+        return noise
+
+    def calculate_denoised(self, sigma, model_output, model_input):
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (model_output.ndim - 1))
+        return model_input - model_output * sigma
+
+    def noise_scaling(self, sigma, noise, latent_image, max_denoise=False):
+        return sigma * noise + (1.0 - sigma) * latent_image
+
+    def inverse_noise_scaling(self, sigma, latent):
+        return latent / (1.0 - sigma)
+
+
+class ModelSamplingDiscreteFlow(torch.nn.Module):
+    """Sampling для RF-моделей (NoobAI Rectified Flow, SD3)"""
+    def __init__(self, model_config=None, shift=1.0):
+        super().__init__()
+        self.shift = shift
+        timesteps = 1000
+        ts = self.sigma(torch.arange(1, timesteps + 1, 1))
+        self.register_buffer('sigmas', ts)
+
+    @property
+    def sigma_min(self):
+        return self.sigmas[0]
+
+    @property
+    def sigma_max(self):
+        return self.sigmas[-1]
+
+    def sigma(self, timestep):
+        return timestep / 1000.0
+
+    def timestep(self, sigma):
+        return sigma * 1000.0
+
+    def percent_to_sigma(self, percent):
+        if percent <= 0.0:
+            return 1.0
+        if percent >= 1.0:
+            return 0.0
+        return 1.0 - percent
+
+    def calculate_input(self, sigma, noise):
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (noise.ndim - 1))
+        return noise * sigma + (1.0 - sigma) * noise
+
+    def calculate_denoised(self, sigma, model_output, model_input):
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (model_output.ndim - 1))
+        return model_input - model_output * sigma
+
+    def noise_scaling(self, sigma, noise, latent_image, max_denoise=False):
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (noise.ndim - 1))
+        return sigma * noise + (1.0 - sigma) * latent_image
+
+    def inverse_noise_scaling(self, sigma, latent):
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (latent.ndim - 1))
+        return latent / (1.0 - sigma).clamp(min=1e-7)
