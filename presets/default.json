@@ -1,5 +1,5 @@
 {
-    "default_model": "NoobAI-vpred.safetensors",
+    "default_model": "NoobAI-XL-v1.1.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.5,
     "default_loras": [
@@ -31,10 +31,10 @@
     ],
     "default_cfg_scale": 5.0,
     "default_sample_sharpness": 0.0,
-    "default_sampler": "euler",
+    "default_sampler": "euler_ancestral",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "1girl, hatsune miku, rib:y\\(uhki\\), other_tags, masterpiece, best quality",
+    "default_prompt": "1girl, hatsune miku, amaama \\(beccyonaika1\\), other_tags, masterpiece, best quality, absurdres, highres",
     "default_prompt_negative": "worst quality, low quality, lowres, bad hands, mutated hands, blurry, ambiguous form, disfigured, censored",
     "default_styles": [],
     "default_aspect_ratio": "832*1216",
