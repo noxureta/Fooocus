@@ -1,0 +1,6 @@
+[
+    {
+        "name": "Novel negative",
+        "negative_prompt": "displeasing, very displeasing, normal quality, bad quality, blurry, lowres, upscaled, artistic error, film grain, scan artifacts, bad anatomy, bad hands, worst quality, bad quality, jpeg artifacts, very displeasing, chromatic aberration, halftone, multiple views, logo, too many watermarks, @_@, mismatched pupils"
+    },
+]
