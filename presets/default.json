@@ -1,5 +1,5 @@
 {
-    "default_model": "NoobAI-XL-v1.1.safetensors",
+    "default_model": "ChenkinNoob-XL-V0.5.safetensors",
     "default_refiner": "None",
     "default_refiner_switch": 0.5,
     "default_loras": [
@@ -34,8 +34,8 @@
     "default_sampler": "euler_ancestral",
     "default_scheduler": "normal",
     "default_performance": "Speed",
-    "default_prompt": "1girl, solo, hatsune miku, amaama \\(beccyonaika1\\), masterpiece, best quality, very aesthetic",
-    "default_prompt_negative": "displeasing, very displeasing, normal quality, bad quality, lowres, upscaled, artistic error, film grain, scan artifacts, bad anatomy, bad hands, worst quality, jpeg artifacts, chromatic aberration, multiple views, @_@, mismatched pupils, mammal, anthro, furry",
+    "default_prompt": "1girl, solo, hatsune miku, amaama \\(beccyonaika1\\), masterpiece, best quality, newest, high resolution, aesthetic, excellent, year 2026",
+    "default_prompt_negative": "worst quality, old, early, low quality, lowres, signature, username, logo, bad hands, mutated hands",
     "default_styles": [],
     "default_aspect_ratio": "832*1216",
     "default_overwrite_step": -1,
